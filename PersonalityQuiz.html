@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Connor Bodine | Four-Type Personality Quiz</title>
+        <!-- HTML, CSS + JavaScript -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta charset="utf-8">
+        <style>
+            .l-header {
+                background-color: transparent;
+                padding: 10px 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .bd-grid {
+                max-width: 1024px;
+                display: grid;
+                margin-left: var(--mb-2);
+                margin-right: var(--mb-2);
+            }
+
+            .logo-and-links {
+                display: flex;
+                align-items: center;
+            }
+
+            .blue_nav__logo {
+                margin-left: 20px;
+                margin-top: 20px;
+                color: #15263a;
+                text-decoration: none;
+                font-size: 1.2rem;
+                margin-right: 20px;
+            }
+
+            .blue_nav__logo:hover {
+                color: deepskyblue;
+            }
+
+            .blue_nav__links {
+                margin-right: 20px;
+                margin-top: 15px;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                color: #15263a;
+            }
+
+            .blue_nav__link {
+                text-decoration: none;
+                color: #15263a;
+                font-size: 1.2rem;
+                margin-left: 20px;
+            }
+
+            .blue_nav__link:hover {
+                color: deepskyblue;
+            }
+
+            html {
+                box-sizing: border-box;
+            }
+            *,
+
+            *:before,
+            *:after {
+                box-sizing: inherit;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: 100;
+                line-height: 1.7rem;
+                background: no-repeat linear-gradient(180deg, #CCDDE2, #ffffff);
+            }
+
+            .quiz-container {
+                box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+                text-shadow: 1px 1px white;
+                padding: 3rem;
+                text-shadow: 0 1px #00000010;
+                width: 60%;
+                margin: 5rem auto;
+                display: flex;
+                flex-direction: column;
+                background: linear-gradient(360deg, transparent, #ffffff);
+                min-height: 40vh;
+                width: 90%;
+                max-width: 800px;
+                margin: 5rem auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            @media screen and (max-width: 600px) {
+                /* Adjust styles for smaller screens */
+                .quiz-container {
+                    width: 90%;
+                }
+            }
+
+            .title {
+                margin-top: 0;
+                margin-bottom: 3rem;
+                color: #000000;
+                font-weight: 600;
+                font-size: 2rem;
+                text-align: center;
+                text-transform: uppercase;
+                line-height: 2rem;
+            }
+
+            @media screen and (max-width: 600px) {
+                .title {
+                    font-size: 1.5rem;
+                }
+            }
+
+            .finalResults {
+                margin-top: 0;
+                margin-bottom: 3rem;
+                color: #000000;
+                font-weight: 600;
+                font-size: 2rem;
+                text-align: center;
+                text-transform: uppercase;
+                line-height: 2rem;
+            }
+
+            @media screen and (max-width: 600px) {
+                .finalResults {
+                    font-size: 1.5rem;
+                }
+            }
+
+            .question {
+                margin: 2rem 0;
+                font-size: 1.5rem;
+                text-align: center;
+            }
+
+            .option {
+                padding: 1rem;
+                color: #000000;
+                background: #ffffff(255, 255, 255, 0.3);
+                width: 80%;
+                border-radius: 5px;
+                transition: all 0.3s;
+            }
+
+            .option:hover {
+                background: rgba(255, 255, 255, 0.7);
+            }
+
+            .option input:checked .option {
+                background: #08038c;
+                color: #000000;
+            }
+
+            .controls {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 2rem;
+            }
+
+            @media screen and (max-width: 600px) {
+                .controls {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                button {
+                    margin-top: 1rem;
+                }
+            }
+
+            button {
+                padding: 0.5rem 1.5rem;
+                border: none;
+                box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+                border-radius: 5px;
+                font-weight: 300;
+                color: white;
+                outline: none;
+                transform: scale(0.98);
+                transition: all 0.2s;
+                font-size: 1rem;
+            }
+
+            @media screen and (max-width: 600px) {
+                button {
+                    font-size: 0.8rem;
+                }
+            }
+
+            button.previous {
+                background: #08038c;
+                margin: 1rem;
+            }
+
+            button.next {
+                background: #3c91e6;
+                margin: 1rem;
+            }
+
+            button.restart {
+                background: #3c91e6;
+                color: #ffffff;
+                font-size: 2rem;
+                margin-bottom: 1rem;
+                transition: all 0.4s;
+            }
+
+            button.restart:hover {
+                color: #000000;
+            }
+
+            button:hover,
+            button:focus {
+                transform: scale(1.3);
+                font-weight: 500;
+                box-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
+            }
+
+            .result {
+                display: flex;
+                flex-direction: column;
+                padding: 2rem;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                font-size: 2.5rem;
+                min-height: 5vh;
+            }
+
+            .final-score {
+                color: #000000;
+            }
+
+            .summary {
+                font-size: 1rem;
+                text-shadow: 1px 1px #ffffff50;
+                color: #000000;
+                background: rgba(255, 255, 255, 0.4);
+                border-radius: 5px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .summary h1 {
+                align-self: center;
+            }
+
+            .blue_footer {
+                margin-top: auto;
+                position: relative;
+                bottom: 0;
+                width: 100vw;
+                background-color: transparent;
+                text-align: center;
+                padding: 20px;
+                z-index: 1;
+            }
+
+            .blue_footer__social {
+                margin-top: 10px;
+            }
+
+            .blue_footer__icon {
+                margin: 0 10px;
+                text-decoration: none;
+                color: #15263a;
+                font-size: 1.5rem;
+            }
+
+            .footer__icon:hover {
+                color: #ffd700;
+            }
+
+            .blue_footer__copy {
+                font-family: Arial, Helvetica, sans-serif;
+                margin-top: auto;
+                position: relative;
+                bottom: 0;
+                width: 100vw;
+                background-color: transparent;
+                color: #15263a;
+                text-align: center;
+                padding: 20px;
+                z-index: 1;
+            }
+        </style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/boxicons/2.0.7/css/boxicons.min.css">
+    </head>
+    <body>
+        <header class="l-header">
+            <nav class="nav bd-grid">
+                <div class="logo-and-links">
+                    <a href="index.html" class="blue_nav__logo"><span style="font-weight: lighter">C |</span><strong> B</strong></a>
+                </div>
+            </nav>
+            <div class="blue_nav__links">
+                <a href="index.html" class="blue_nav__link">WORK</a>
+                <a href="Portfolio_About.html" class="blue_nav__link">ABOUT</a>
+                <a href="Portfolio_Contact.html" class="blue_nav__link">CONTACT</a>
+            </div>
+        </header>
+        <div class="quiz-container">
+            <div class="title">Four Types Persona</div>
+            <h2 style="text-align: center;"><span style="color: red;">Spark,</span><span style="color: orange;"> Sky,</span>
+                <span style="color: green;">Forest,</span> or <span style="color: blue;">Ocean,</span>
+                <strong> what are YOU?</strong></h2>
+            <h2 style="text-align: center;">Take the quiz to find out!</h2>
+            <div id="question" class="question"></div>
+            <label for="option1" class="option">
+                <input type="radio" name="option" value="1" />
+                <span class="option1"></span>
+            </label>
+            <label for="option2" class="option">
+                <input type="radio" name="option" value="2" />
+                <span class="option2"></span>
+            </label>
+            <label for="option3" class="option">
+                <input type="radio" name="option" value="3" />
+                <span class="option3"></span>
+            </label>
+            <label for="option4" class="option">
+                <input type="radio" name="option" value="4" />
+                <span class="option4"></span>
+            </label>
+            <!-- Previous / Next Buttons -->
+            <div class="controls">
+                <button class="previous">Previous</button><button class="next">Next</button>
+            </div>
+        </div>
+
+        <div class="result">
+
+        </div>
+    <footer class="blue_footer">
+        <div class="blue_footer__social">
+            <a href="https://connorbodine.myportfolio.com/" class="blue_footer__icon"><i class='bx bxl-adobe' ></i></a>
+            <a href="https://github.com/Blujakmusic" class="blue_footer__icon"><i class='bx bxl-github' ></i></a>
+        </div>
+        <br>
+        <p class="blue_footer__copy">&#169; Blujak Music. Built by Connor Bodine</p>
+    </footer>
+    </body>
+    <script>
+        // All seven questions with four possible answers each:
+        const questions = [
+            {
+                "question": "You are planning on hanging out with some friends over the weekend, when making plans, what do you do?",
+                "answer1": "I suggest that we do something fun or entertaining. I don't really care what it is!",
+                "answer1Total": "1",
+                "answer2": "I actually organize the group chat or phone call.",
+                "answer2Total": "2",
+                "answer3": "Get directions and see how long it'll take to get there. Planning is crucial, and I have to be practical.",
+                "answer3Total": "3",
+                "answer4": "I only go if I'm specifically invited. If so, I'll ask everyone what they want to do.",
+                "answer4Total": "4"
+            },
+            {
+                "question": "What strength / weakness pair resonates most with you?",
+                "answer1": "Free-spirited + Laid-back / Capricious + Indecisive",
+                "answer1Total": "1",
+                "answer2": "Natural Leader + Passionate / Arrogant + Angry",
+                "answer2Total": "2",
+                "answer3": "Grounded + Honest / Stubborn + Inflexible",
+                "answer3Total": "3",
+                "answer4": "Intelligent + Deep / Sensitive + Emotional",
+                "answer4Total": "4"
+            },
+            {
+                "question":
+                "Your supervisor at work just assigned you a major project with a tight deadline, <strong>how do you handle this?</strong>",
+                "answer1": "I pound 3 energy drinks and see how much I can get done before the day is finished. Once I'm focused, it's go time!",
+                "answer1Total": "1",
+                "answer2": "I delegate a portion of the tasks to my subordinates. This is an all hands on deck matter and I'm in charge as usual.",
+                "answer2Total": "2",
+                "answer3": "I draw out a schedule for how I will complete each portion of the task in a timely manner, assigning various roles to myself and others. Measure twice, cut once.",
+                "answer3Total": "3",
+                "answer4": "I structure each task in the project by priority and create a hierarchy of what needs to be accomplished first by urgency. Efficiency is key!",
+                "answer4Total": "4"
+            },
+            {
+                "question": "It's your significant other's day off and you want to do something special, <strong>what's the plan?</strong>",
+                "answer1": "We'll go wherever the wind takes us! I'm sure there's a fun amusement park or party happening somewhere.",
+                "answer1Total": "1",
+                "answer2": "I've already got it planned out. We'll get our tasks / chores done, then go on a productive walk.",
+                "answer2Total": "2",
+                "answer3":
+                "We spend the day reading and reflecting at the park. Nothing beats communing with nature.",
+                "answer3Total": "3",
+                "answer4": "I ask them how they'd like to spend their day and then surprise them with a fun sunset date at the beach.",
+                "answer4Total": "4"
+            },
+            {
+                "question": "Your friend calls you and sounds distressed. What do you do?",
+                "answer1": "Tell them not to worry because life is short and offer to do something fun to distract them.",
+                "answer1Total": "1",
+                "answer2": "Tell them whatever it is, they can get over it. It could be worse and there's more important things to deal with.",
+                "answer2Total": "2",
+                "answer3": "Listen to them and provide a solution for them. Whether they listen or not is their prerogative.",
+                "answer3Total": "3",
+                "answer4": "Ask them why they feel that way, comfort them and offer advice.",
+                "answer4Total": "4"
+            },
+            {
+                "question": "Favorite color?",
+                "answer1": "Light, bright and cheerful colors like yellow, pink and orange.",
+                "answer1Total": "1",
+                "answer2": "Warm colors like red and orange.",
+                "answer2Total": "2",
+                "answer3": "Neutral, earthy, floral and pastel colors. Green, brown, grey, beige and burgundy are all nice.",
+                "answer3Total": "3",
+                "answer4": "Cool colors. Blue, violet and green are my color palette.",
+                "answer4Total": "4"
+            },
+            {
+                "question": "How would your friends / family describe you?",
+                "answer1": "The wild child",
+                "answer1Total": "1",
+                "answer2": "The leader",
+                "answer2Total": "2",
+                "answer3": "The honest one",
+                "answer3Total": "3",
+                "answer4": "The caring one",
+                "answer4Total": "4"
+            },
+            ]
+
+            // initializing the question index, score amount and the amount of questions
+            let currentQuestion = 0;
+            let score = [];
+            let selectedAnswersData = [];
+            let totalQuestions = questions.length;
+
+            // Assigning the CSS classes to variables to be assigned functions
+            const container = document.querySelector('.quiz-container');
+            const questionElement = document.querySelector('.question');
+            const option1 = document.querySelector('.option1');
+            const option2 = document.querySelector('.option2');
+            const option3 = document.querySelector('.option3');
+            const option4 = document.querySelector('.option4');
+            const nextButton = document.querySelector('.next');
+            const previousButton = document.querySelector('.previous');
+            const restartButton = document.querySelector('.restart');
+            const result = document.querySelector('.result');
+
+            // Function to generate the questions
+            function generateQuestions (index) {
+                // Select each question by passing it a certain index of the question
+                const question = questions[index];
+                const option1Total = questions[index].answer1Total;
+                const option2Total = questions[index].answer2Total;
+                const option3Total = questions[index].answer3Total;
+                const option4Total = questions[index].answer4Total;
+                // Populate html elements 
+                questionElement.innerHTML = `${index + 1}. ${question.question}`
+                option1.setAttribute('data-total', `${option1Total}`); // establish and set the value / score of each answer
+                option2.setAttribute('data-total', `${option2Total}`);
+                option3.setAttribute('data-total', `${option3Total}`);
+                option4.setAttribute('data-total', `${option4Total}`);
+                option1.innerHTML = `${question.answer1}` // set the answer to the corresponding answer in the document
+                option2.innerHTML = `${question.answer2}`
+                option3.innerHTML = `${question.answer3}`
+                option4.innerHTML = `${question.answer4}`
+            }
+
+            function loadNextQuestion () {
+                const selectedOption = document.querySelector('input[type="radio"]:checked');
+                // Check if there is a button selected
+                if(!selectedOption) {
+                    alert('Please select your answer!');
+                    return;
+                }
+                // Get value of selected button (1 - 4)
+                const answerScore = Number(selectedOption.nextElementSibling.getAttribute('data-total'));
+
+                // Add the answer score to the score array that was initialized earlier
+                score.push(answerScore);
+
+                selectedAnswersData.push()
+                
+                // Assign the amount of the total score of each selected answer to the variable
+                const totalScore = score.reduce((total, currentNum) => total + currentNum);
+
+                // Finally we increment the current question number to be used as the index for each array
+                currentQuestion++;
+
+                    selectedOption.checked = false;
+                // If quiz is on the final question...
+                if(currentQuestion == totalQuestions - 1) {
+                    nextButton.textContent = 'Finish';
+                }
+                // If the quiz is finished then we hide the quiz and show the results in another page here:
+                if(currentQuestion == totalQuestions) {
+                    container.style.display = 'none';
+                    if (totalScore > 0 && totalScore <= 7) {
+                        result.innerHTML =
+                            `<h1 class="finalResults">Congratulations!</h1>
+                            <h1 class="finalResults">You are <span style="color: orange;">SKY!</span></h1>
+                            <div class="summary">
+                                <p>You are as care free as the wind. You are charismatic, energetic and free-spirited.
+                                    People love spending time with you and you are gregarious and sociable. You are the life of
+                                    the party. But be careful, as you go where the wind takes you, be cautious to not be flaky or fickle.
+                                    Always remember to be decisive.</p>
+                            </div>
+                            <button class="restart">Restart Quiz</button>`;
+                    } else if (totalScore > 7 && totalScore <= 14) {
+                        result.innerHTML =
+                            `<h1 class="finalResults">Congratulations!</h1>
+                            <h1 class="finalResults">You are <span style="color: red;">SPARK!</span></h1>
+                            <div class="summary">
+                                <p>You are like fire; a spark that ignites with true passion. You are filled with goals and ambitions and love to lead.
+                                    People often respect you (and sometimes fear you), but they always recognize you as a natural leader.
+                                    You are easy to look up to and enjoy opportunities to lead and manage. Make sure that you bridle your passions
+                                    and don't get to hot-headed when others might not always follow. Your enthusiasm and zeal are your greatest strengths.</p>
+                            </div>
+                            <button class="restart">Restart Quiz</button>`;
+                    } else if (totalScore > 14 && totalScore <= 21) {
+                        result.innerHTML =
+                            `<h1 class="finalResults">Congratulations!</h1>
+                            <h1 class="finalResults">You are <span style="color: green;">Forest!</span></h1>
+                            <div class="summary">
+                                <p>You are grounded and principled like the Earth. People trust you, rely on you and can always depend on you.
+                                    People often go to you for advice as you are constant and honest in your words and dealings.
+                                    Be careful, however, as others may find you as stubborn and inflexible. It's best to emulate some of the elements
+                                    of wood by maintaining your grounded, honest nature, while not forgetting your roots, but also remembering
+                                    to be flexible. You rock!</p>
+                            </div>
+                            <button class="restart">Restart Quiz</button>`;
+                    } else if (totalScore > 21 && totalScore <= 29) {
+                        result.innerHTML =
+                            `<h1 class="finalResults">Congratulations!</h1>
+                            <h1 class="finalResults">You are <span style="color: blue;">OCEAN!</span></h1>
+                            <div class="summary">
+                                <p>You are like water; deep and mysterious like the sea and easy to adapt. Others may come to you for comfort and consolation
+                                    as a listening ear or a friend who can help heal. You are passionate, intelligent and vigilant and are aware of others
+                                    around you and feel inspired and creative by the beauty you see. You value learning and creativity but be careful
+                                    as others may perceive you to be too emotional and overly sensitive. You can balance this by finding your inner calm
+                                    and not allowing your emotions to dictate your actions. Always remember to choose logic over emotion and you will succeed.</p>
+                            </div>
+                            <button class="restart">Restart Quiz</button>`;
+                    }
+                }
+                generateQuestions(currentQuestion);
+            }
+
+            // Function to load previous question
+            function loadPreviousQuestion() {
+                // Decrement quentions index
+                currentQuestion--;
+                // remove last array value to refresh
+                score.pop();
+                // Generate the question
+                generateQuestions(currentQuestion);
+            }
+
+            // Function to reset and restart the quiz:
+            function restartQuiz(e) {
+                if(e.target.matches('button')) {
+                // reset array index and total score
+                currentQuestion = 0;
+                score = [];
+                // Reload quiz to the start
+                location.reload();
+                }
+            }
+
+            generateQuestions(currentQuestion); // load first question with quiz
+            nextButton.addEventListener('click', loadNextQuestion); // button click to go back
+            previousButton.addEventListener('click',loadPreviousQuestion); // or forward in quiz
+            result.addEventListener('click',restartQuiz); // button click to restart after results are shown
+    </script>
+</html>
